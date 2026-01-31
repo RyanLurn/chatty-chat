@@ -1,4 +1,4 @@
-import { UserIdSchema } from "#data/schema/user";
+import { UsernameSchema } from "#data/schema/user";
 import type { Branded } from "@chatty-chat/utils/types";
 import * as z from "zod";
 
@@ -12,7 +12,7 @@ export const ChatMessageIdSchema = z.custom<ChatMessageId>((value) => {
 });
 
 export const ChatMessageSchema = z.object({
-  senderId: UserIdSchema,
+  sender: UsernameSchema,
   content: z.string().min(1).max(2048),
   timestamp: z.int().positive(),
 });
@@ -31,7 +31,7 @@ export const ChatMessageReaderIdSchema = z.custom<ChatMessageReaderId>(
 
 export const ChatMessageReaderSchema = z.object({
   chatMessageId: ChatMessageIdSchema,
-  readerId: ChatMessageReaderIdSchema,
+  reader: UsernameSchema,
   readAt: z.int().positive(),
 });
 export type ChatMessageReader = z.infer<typeof ChatMessageReaderSchema>;

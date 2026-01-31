@@ -4,10 +4,10 @@ import type {
   ChatMessageReader,
   ChatMessageReaderId,
 } from "#data/schema/chat-message";
-import type { User, UserId } from "#data/schema/user";
+import type { User, Username } from "#data/schema/user";
 
 export interface Cache {
-  users: Map<UserId, User>;
+  users: Map<Username, User>;
   chatMessages: Map<ChatMessageId, ChatMessage>;
   chatMessageReaders: Map<ChatMessageReaderId, ChatMessageReader>;
 }

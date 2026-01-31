@@ -1,9 +1,9 @@
 import type { Branded } from "@chatty-chat/utils/types";
 import * as z from "zod";
 
-export type UserId = Branded<string, "UserId">;
-export const UserIdSchema = z.custom<UserId>((value) => {
-  const validationResult = z.uuidv4().safeParse(value);
+export type Username = Branded<string, "Username">;
+export const UsernameSchema = z.custom<Username>((value) => {
+  const validationResult = z.string().min(1).max(32).safeParse(value);
   if (!validationResult.success) {
     return false;
   }
@@ -11,7 +11,6 @@ export const UserIdSchema = z.custom<UserId>((value) => {
 });
 
 export const UserSchema = z.object({
-  name: z.string().min(1).max(16),
   joinedAt: z.int().positive(),
   leftAt: z.int().positive().optional(),
 });
