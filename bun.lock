@@ -24,6 +24,17 @@
     "packages/tsconfigs": {
       "name": "@chatty-chat/tsconfigs",
     },
+    "packages/utils": {
+      "name": "@chatty-chat/utils",
+      "dependencies": {
+        "zod": "catalog:",
+      },
+      "devDependencies": {
+        "@chatty-chat/tsconfigs": "workspace:*",
+        "@types/bun": "catalog:types",
+        "typescript": "catalog:",
+      },
+    },
   },
   "catalog": {
     "@t3-oss/env-core": "^0.13.10",
@@ -39,6 +50,8 @@
     "@chatty-chat/server": ["@chatty-chat/server@workspace:apps/server"],
 
     "@chatty-chat/tsconfigs": ["@chatty-chat/tsconfigs@workspace:packages/tsconfigs"],
+
+    "@chatty-chat/utils": ["@chatty-chat/utils@workspace:packages/utils"],
 
     "@types/bun": ["@types/bun@1.3.8", "", { "dependencies": { "bun-types": "1.3.8" } }, "sha512-3LvWJ2q5GerAXYxO2mffLTqOzEu5qnhEAlh48Vnu8WQfnmSwbgagjGZV6BoHKJztENYEDn6QmVd949W4uESRJA=="],
 
