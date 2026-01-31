@@ -12,6 +12,5 @@ export const UsernameSchema = z.custom<Username>((value) => {
 
 export const UserSchema = z.object({
   joinedAt: z.int().positive(),
-  leftAt: z.int().positive().optional(),
 });
 export type User = z.infer<typeof UserSchema>;
