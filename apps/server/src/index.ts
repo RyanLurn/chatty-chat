@@ -32,15 +32,21 @@ const server = Bun.serve({
   websocket: {
     data: {} as WebSocketData,
     open: (ws) => {
-      console.log(`${ws.data.username} joined the chat!`);
       cache.users.set(ws.data.username, {
         joinedAt: Date.now(),
       });
+
+      const message = `${ws.data.username} joined the chat!`;
+      console.log(message);
+      ws.send(message);
     },
     message: (ws, message) => {},
     close: (ws) => {
-      console.log(`${ws.data.username} left the chat.`);
       cache.users.delete(ws.data.username);
+
+      const message = `${ws.data.username} left the chat.`;
+      console.log(message);
+      ws.send(message);
     },
   },
 });
