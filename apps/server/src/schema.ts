@@ -12,7 +12,6 @@ export const ChatMessageIdSchema = z.custom<ChatMessageId>((value) => {
 });
 
 export const ChatMessageSchema = z.object({
-  id: ChatMessageIdSchema,
   sender: z.string().min(1).max(16),
   content: z.string().min(1).max(2048),
   timestamp: z.int().positive(),
