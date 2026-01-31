@@ -113,6 +113,15 @@ const server = Bun.serve({
       ws.send(message);
     },
   },
+  error(error) {
+    console.error(error);
+
+    return new Response(`<pre>${error}\n${error.stack}</pre>`, {
+      headers: {
+        "Content-Type": "text/html",
+      },
+    });
+  },
 });
 
 console.log(`Server running at ${server.url}`);
