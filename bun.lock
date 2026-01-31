@@ -10,6 +10,18 @@
         "prettier-plugin-curly": "0.4.1",
       },
     },
+    "apps/cli": {
+      "name": "@chatty-chat/cli",
+      "dependencies": {
+        "@chatty-chat/utils": "workspace:*",
+        "zod": "catalog:",
+      },
+      "devDependencies": {
+        "@chatty-chat/tsconfigs": "workspace:*",
+        "@types/bun": "catalog:types",
+        "typescript": "catalog:",
+      },
+    },
     "apps/server": {
       "name": "@chatty-chat/server",
       "dependencies": {
@@ -48,6 +60,8 @@
     },
   },
   "packages": {
+    "@chatty-chat/cli": ["@chatty-chat/cli@workspace:apps/cli"],
+
     "@chatty-chat/server": ["@chatty-chat/server@workspace:apps/server"],
 
     "@chatty-chat/tsconfigs": ["@chatty-chat/tsconfigs@workspace:packages/tsconfigs"],
