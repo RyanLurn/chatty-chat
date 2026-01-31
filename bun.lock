@@ -13,6 +13,7 @@
     "apps/server": {
       "name": "@chatty-chat/server",
       "dependencies": {
+        "@chatty-chat/utils": "workspace:*",
         "zod": "catalog:",
       },
       "devDependencies": {
