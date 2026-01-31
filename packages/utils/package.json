@@ -9,6 +9,9 @@
   "imports": {
     "#*": "./src/*.ts"
   },
+  "exports": {
+    "./types": "./src/types.ts"
+  },
   "dependencies": {
     "zod": "catalog:"
   },
