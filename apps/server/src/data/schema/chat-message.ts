@@ -17,3 +17,21 @@ export const ChatMessageSchema = z.object({
   timestamp: z.int().positive(),
 });
 export type ChatMessage = z.infer<typeof ChatMessageSchema>;
+
+export type ChatMessageReaderId = Branded<string, "ChatMessageReaderId">;
+export const ChatMessageReaderIdSchema = z.custom<ChatMessageReaderId>(
+  (value) => {
+    const validationResult = z.uuidv4().safeParse(value);
+    if (!validationResult.success) {
+      return false;
+    }
+    return true;
+  }
+);
+
+export const ChatMessageReaderSchema = z.object({
+  chatMessageId: ChatMessageIdSchema,
+  readerId: ChatMessageReaderIdSchema,
+  readAt: z.int().positive(),
+});
+export type ChatMessageReader = z.infer<typeof ChatMessageReaderSchema>;
