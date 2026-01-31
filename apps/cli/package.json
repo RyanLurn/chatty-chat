@@ -10,6 +10,7 @@
     "#*": "./src/*.ts"
   },
   "dependencies": {
+    "@chatty-chat/server": "workspace:*",
     "@chatty-chat/utils": "workspace:*",
     "zod": "catalog:"
   },

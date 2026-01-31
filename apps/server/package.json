@@ -9,6 +9,9 @@
   "imports": {
     "#*": "./src/*.ts"
   },
+  "exports": {
+    "./constants": "./src/utils/constants.ts"
+  },
   "dependencies": {
     "@chatty-chat/utils": "workspace:*",
     "zod": "catalog:"

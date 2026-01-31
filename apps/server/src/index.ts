@@ -6,6 +6,7 @@ import type {
 } from "#data/schema/chat-message";
 import { EnvelopeSchema } from "#data/schema/envelope";
 import { UsernameSchema } from "#data/schema/user";
+import { serverPort } from "#utils/constants";
 import * as z from "zod";
 
 export const WebSocketDataSchema = z.object({
@@ -14,6 +15,7 @@ export const WebSocketDataSchema = z.object({
 export type WebSocketData = z.infer<typeof WebSocketDataSchema>;
 
 const server = Bun.serve({
+  port: serverPort,
   routes: {
     "/health": new Response("OK"),
     "/chat": async (request, server) => {
