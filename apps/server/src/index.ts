@@ -1,4 +1,10 @@
 import { cache } from "#cache";
+import type {
+  ChatMessage,
+  ChatMessageId,
+  ChatMessageReaderId,
+} from "#data/schema/chat-message";
+import { EnvelopeSchema } from "#data/schema/envelope";
 import { UsernameSchema } from "#data/schema/user";
 import * as z from "zod";
 
@@ -40,7 +46,65 @@ const server = Bun.serve({
       console.log(message);
       ws.send(message);
     },
-    message: (ws, message) => {},
+    message: (ws, message) => {
+      const json = JSON.parse(message.toString());
+
+      const parseResult = EnvelopeSchema.safeParse(json);
+      if (!parseResult.success) {
+        console.error("Invalid envelope:");
+        console.error(z.prettifyError(parseResult.error));
+        ws.send(
+          JSON.stringify({
+            type: "INVALID_ENVELOPE_ERROR",
+            message: `${ws.data.username} sent an invalid envelope.`,
+          })
+        );
+        return;
+      }
+
+      const envelope = parseResult.data;
+
+      switch (envelope.type) {
+        case "SEND_CHAT_MESSAGE": {
+          const chatMessage: ChatMessage = {
+            sender: ws.data.username,
+            content: envelope.payload.content,
+            timestamp: Date.now(),
+          };
+
+          cache.chatMessages.set(
+            crypto.randomUUID() as ChatMessageId,
+            chatMessage
+          );
+
+          break;
+        }
+        case "READ_CHAT_MESSAGE":
+          const chatMessageId = envelope.payload.chatMessageId;
+          if (!cache.chatMessages.has(chatMessageId)) {
+            console.error(
+              `Could not find chat message with id ${chatMessageId}`
+            );
+            ws.send(
+              JSON.stringify({
+                type: "CHAT_MESSAGE_NOT_FOUND_ERROR",
+                message: `${ws.data.username} reads an invalid chat message id.`,
+              })
+            );
+            return;
+          }
+
+          cache.chatMessageReaders.set(
+            crypto.randomUUID() as ChatMessageReaderId,
+            {
+              chatMessageId,
+              reader: ws.data.username,
+              readAt: Date.now(),
+            }
+          );
+          break;
+      }
+    },
     close: (ws) => {
       cache.users.delete(ws.data.username);
 
